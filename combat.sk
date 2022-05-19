@@ -1,0 +1,22 @@
+on death of player:
+	cancel event
+	set player's health to 0.0001
+	set player's hunger to 2
+	apply potion of resistance of tier 20 to player for 12 seconds
+	apply potion of night vision of tier 1 to player for 3 seconds
+	apply potion of blindness of tier 1 to player for 1.5 seconds
+	message "&cReviving..."
+	loop 60 times:
+		set velocity of player to new Vector 0, 0.1, 0
+		play cloud at the player
+		wait a tick
+	loop 3 times:
+		set velocity of player to new Vector 0, -1.8, 0
+		play mobspawner flames at the player
+		wait a tick
+	strike fake fake lightning at player
+	apply potion of fire resistance of tier 1 to player for 30 seconds
+	#create a safe explosion of force 3 at the player
+	loop 160 times:
+		play cloud at the player
+		wait a tick
