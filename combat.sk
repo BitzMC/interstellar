@@ -22,8 +22,11 @@ command /manareset:
 
 command /manamax:
 	trigger:
-		message "&6Mana has been maxed out!"
-		set {mana.%player%} to {maxmana.%player%}
+		if player does not have permission "bitzcombat.fillmana":
+			message "&cYou do not have permission to run this command."
+		else:
+			message "&6Mana has been maxed out!"
+			set {mana.%player%} to {maxmana.%player%}
 
 on death of player:
 	if {mana.%player%} is greater than 99:
