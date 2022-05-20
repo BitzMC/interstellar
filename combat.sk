@@ -1,22 +1,56 @@
+on join:
+    set {maxmana.%player%} to 100
+
+every 10 ticks:
+	loop all players:
+		send action bar "&b%{mana.%loop-player%}%&b/%{mana.%loop-player%}% Mana" to loop-player
+ 
+every 100 ticks:
+	loop all players:
+		if {mana.%loop-player%} is greater than {maxmana.%loop-player%} - 1:
+			set {mana.%loop-player%} to {maxmana.%loop-player%}
+			stop
+		else:
+			add 1 to {mana.%loop-player%}
+ 
+command /manareset:
+	trigger:
+		message "&6Mana has been reset!"
+		set {mana.%player%} to 0
+		
+
+command /manamax:
+	trigger:
+		message "&6Mana has been maxed out!"
+		set {mana.%player%} to 
+
 on death of player:
-	cancel event
-	set player's health to 0.0001
-	set player's hunger to 2
-	apply potion of resistance of tier 20 to player for 12 seconds
-	apply potion of night vision of tier 1 to player for 3 seconds
-	apply potion of blindness of tier 1 to player for 1.5 seconds
-	message "&cReviving..."
-	loop 60 times:
-		set velocity of player to new Vector 0, 0.1, 0
-		play cloud at the player
-		wait a tick
-	loop 3 times:
-		set velocity of player to new Vector 0, -1.8, 0
-		play mobspawner flames at the player
-		wait a tick
-	strike fake fake lightning at player
-	apply potion of fire resistance of tier 1 to player for 30 seconds
-	#create a safe explosion of force 3 at the player
-	loop 160 times:
-		play cloud at the player
-		wait a tick
+	if {mana.%player%} is greater than 99:
+		set {mana.%player%} to 0
+		cancel event
+		set player's health to 0.0001
+		set player's hunger to 2
+		apply potion of resistance of tier 20 to player for 12 seconds
+		apply potion of night vision of tier 1 to player for 3 seconds
+		apply potion of blindness of tier 1 to player for 1.5 seconds
+		apply potion of glowing of tier 1 to player for 3 seconds
+		message "&cReviving..."
+		loop 60 times:
+			set velocity of player to new Vector 0, 0.1, 0
+			play cloud at the player
+			wait a tick
+		loop 3 times:
+			set velocity of player to new Vector 0, -1.65, 0
+			play mobspawner flames at the player
+			wait a tick
+		strike fake fake lightning at player
+		play sound "ambient.weather.thunder" with volume 2 to the player
+		apply potion of fire resistance of tier 1 to player for 30 seconds
+		send title "" with subtitle "&cYou have been revived!" to player for 2 seconds with fadein 0.5 second and fade out 0.5 second
+		#create a safe explosion of force 3 at the player
+		loop 160 times:
+			play cloud at the player
+			wait a tick
+
+on respawn:
+	set {mana.%player%} to 0
