@@ -71,4 +71,5 @@ on respawn:
 	set {mana.%player%} to 0
     
 on eat:
-	add 2 to {mana.%player%}
+	if {mana.%player%} is less than {maxmana.%player%}:
+		add 2 to {mana.%player%}
