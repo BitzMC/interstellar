@@ -68,3 +68,6 @@ on right click with sword:
 
 on respawn:
 	set {mana.%player%} to 0
+    
+on eat:
+	add 5 to {mana.%player%}
