@@ -5,7 +5,7 @@ New Minecraft combat made for BitzMC, written in Skript.
 ## Abilities
 
 ### Revival:
-![revival](https://user-images.githubusercontent.com/82516534/169664074-fe13436e-bd0c-436b-b209-777c72b8d384.gif)
+![revival](https://user-images.githubusercontent.com/82516534/169664383-2b0ac111-464c-4a75-a056-74bb85afc796.gif)
 
 
 ## Commands
