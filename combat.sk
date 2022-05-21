@@ -30,6 +30,7 @@ command /manamax:
 
 on death of player:
 	if {mana.%player%} is greater than 99:
+		play sound "block.beacon.power_select" with volume 2 to the player
 		set {mana.%player%} to 0
 		cancel event
 		set player's health to 0.0001
