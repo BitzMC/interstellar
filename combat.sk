@@ -66,6 +66,7 @@ on right click with sword:
 		remove regeneration from player
 		apply potion of absorption of tier 1 to player for 8 seconds
 		apply potion of regeneration of tier 1 to player for 8 seconds
+        	apply potion of resistance of tier 20 to player for 1 seconds
 
 on respawn:
 	set {mana.%player%} to 0
