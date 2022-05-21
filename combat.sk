@@ -71,4 +71,4 @@ on respawn:
 	set {mana.%player%} to 0
     
 on eat:
-	add 5 to {mana.%player%}
+	add 2 to {mana.%player%}
