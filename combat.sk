@@ -57,6 +57,14 @@ on death of player:
 			play cloud at the player
 			wait a tick
 
+on right click with sword:
+	if {mana.%player%} is greater than 14:
+		play sound "block.beacon.power_select" with volume 2 to the player
+		add -15 to {mana.%player%}
+		remove absorption from player
+		remove regeneration from player
+		apply potion of absorption of tier 1 to player for 8 seconds
+		apply potion of regeneration of tier 1 to player for 8 seconds
+
 on respawn:
 	set {mana.%player%} to 0
-
