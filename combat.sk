@@ -58,6 +58,7 @@ on death of player:
 			wait a tick
 
 on right click with sword:
+	player is sneaking
 	if {mana.%player%} is greater than 34:
 		play sound "block.beacon.power_select" with volume 2 to the player
 		add -35 to {mana.%player%}
