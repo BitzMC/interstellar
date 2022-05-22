@@ -1,4 +1,4 @@
-# When players join, make sure the variablrs are set.
+# When players join, make sure the variables are set.
 on join:
 	set {mana.%player%} to 0
 	set {maxmana.%player%} to 100
