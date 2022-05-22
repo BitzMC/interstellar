@@ -37,10 +37,10 @@ command /manamax:
 command /powerselect:
 	trigger:
 		set metadata tag "power-select-gui" of player to chest inventory with 3 rows named "&6Power Select"
-		set slot 10 of metadata tag "power-select-gui" of player to magma block named "&6&lX5-07" with lore "%nl%&7Used in causing massive amounts of%nl%&7damage, at the cost of yourself.%nl%%nl%&aLeft Click&f to join."
-		set slot 12 of metadata tag "power-select-gui" of player to obsidian named "&d&lX2-08" with lore "%nl%&7Used in causing high amounts of%nl%&7damage, while keeping yourself alive.%nl%%nl%&aLeft Click&f to join."
-		set slot 14 of metadata tag "power-select-gui" of player to iron block named "&7&lX4-05" with lore "%nl%&7Used in keeping you and your team alive.%nl%%nl%&aLeft Click&f to join."
-		set slot 16 of metadata tag "power-select-gui" of player to ice named "&b&lX5-04" with lore "%nl%&7Used in ensuring you stay alive%nl%&7damage, at the cost of doing much damage.%nl%%nl%&aLeft Click&f to join."
+		set slot 10 of metadata tag "power-select-gui" of player to magma block named "&6&lX5-07" with lore "%nl%&7Used in causing massive amounts of%nl%&7damage, at the cost of your own life.%nl%%nl%&aClick&f to join."
+		set slot 12 of metadata tag "power-select-gui" of player to obsidian named "&d&lX2-08" with lore "%nl%&7Used in causing high amounts of damage.%nl%%nl%&aClick&f to join."
+		set slot 14 of metadata tag "power-select-gui" of player to iron block named "&7&lX4-05" with lore "%nl%&7Used in keeping you and your team alive.%nl%%nl%&aClick&f to join."
+		set slot 16 of metadata tag "power-select-gui" of player to ice named "&b&lX5-04" with lore "%nl%&7Used in guaranteeing you, and your team stay alive,%nl%&7at the cost of not doing much damage.%nl%%nl%&6NOTICE:&r&7 This class is recommended for%nl%&7experienced players, you may find it too%nl%&7difficult to time correctly.%nl%%nl%&aClick&f to join."
 		open (metadata tag "power-select-gui" of player) to player
 
 # For checking GUI events.
