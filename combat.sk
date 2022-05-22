@@ -53,13 +53,13 @@ on inventory click:
 		close player's inventory
 		# Check which slot is being clicked.
 		if index of event-slot is 10:
-			message "&fYou have joined &6&lX5-07&r&f!"
+			message "&fYou are now using &6&lX5-07&r&f!"
 		else if index of event-slot is 12:
-			message "&fYou have joined &d&lX2-08&r&f!"
+			message "&fYou are now using &d&lX2-08&r&f!"
 		else if index of event-slot is 14:
-			message "&fYou have joined &7&lX4-05&r&f!"
+			message "&fYou are now using &7&lX4-05&r&f!"
 		else if index of event-slot is 16:
-			message "&fYou have joined &b&lX5-04&r&f!"
+			message "&fYou are now using &b&lX5-04&r&f!"
 
 # When you die, and mana is at 100 or higher, revive the player (primary ability)
 on death of player:
