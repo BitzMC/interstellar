@@ -9,7 +9,7 @@ on join:
 # Every 10 ticks (0.5 seconds) update the action bar.
 every 10 ticks:
 	loop all players:
-		send action bar "&b%{mana.%loop-player%}%&b/%{maxmana.%loop-player%}% Mana %{classname.%loop-player%}%" to loop-player
+		send action bar "&b%{mana.%loop-player%}%&b/%{maxmana.%loop-player%}% Mana&r&7 |&r %{classname.%loop-player%}%" to loop-player
 
 # Every 100 ticks (5 seconds) every player gets 1 more mana if not full.
 every 100 ticks:
