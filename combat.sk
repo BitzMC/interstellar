@@ -1,11 +1,14 @@
+# When players join, make sure the variablrs are set.
 on join:
 	set {mana.%player%} to 0
 	set {maxmana.%player%} to 100
 
+# Every 10 ricks (0.5 seconds) update the action bar.
 every 10 ticks:
 	loop all players:
 		send action bar "&b%{mana.%loop-player%}%&b/%{maxmana.%loop-player%}% Mana" to loop-player
- 
+
+# Every 100 ticks (5 seconds) every player gets 1 more mana if not full.
 every 100 ticks:
 	loop all players:
 		if {mana.%loop-player%} is greater than {maxmana.%loop-player%} - 1:
@@ -13,23 +16,27 @@ every 100 ticks:
 			stop
 		else:
 			add 1 to {mana.%loop-player%}
- 
+
+# Resets mana back to 0.
 command /manareset:
 	trigger:
 		message "&6Mana has been reset!"
 		set {mana.%player%} to 0
-		
-
+	
+# Fills mana to the maximum defined mana.
 command /manamax:
 	trigger:
+		# If the player does not have the permission, they can't run it.
 		if player does not have permission "bitzcombat.fillmana":
 			message "&cYou do not have permission to run this command."
 		else:
 			message "&6Mana has been maxed out!"
 			set {mana.%player%} to {maxmana.%player%}
 
+# When you die, and mana is at 100 or higher, revive the player (primary ability)
 on death of player:
 	if {mana.%player%} is greater than 99:
+		# Sci-fi sound effects.
 		play sound "block.beacon.power_select" with volume 2 to the player
 		add -100 to {mana.%player%}
 		cancel event
@@ -41,13 +48,16 @@ on death of player:
 		apply potion of glowing of tier 1 to player for 3 seconds
 		message "&cReviving..."
 		loop 60 times:
+			# Move the player up continuously upwards.
 			set velocity of player to new Vector 0, 0.1, 0
 			play cloud at the player
 			wait a tick
 		loop 3 times:
+			# And slam the player back on to the ground
 			set velocity of player to new Vector 0, -1.65, 0
 			play mobspawner flames at the player
 			wait a tick
+		# Make fake lightning that doesn't do anything.
 		strike fake fake lightning at player
 		play sound "ambient.weather.thunder" with volume 2 to the player
 		apply potion of fire resistance of tier 1 to player for 30 seconds
@@ -57,6 +67,8 @@ on death of player:
 			play cloud at the player
 			wait a tick
 
+# If the player has 35 mana or higher, give a small window of invincibility when a sword is
+# right-clicked while crouching.
 on right click with sword:
 	player is sneaking
 	if {mana.%player%} is greater than 34:
@@ -68,9 +80,11 @@ on right click with sword:
 		apply potion of regeneration of tier 1 to player for 8 seconds
 		apply potion of resistance of tier 20 to player for 1 seconds
 
+# Reset players mana on respawn.
 on respawn:
 	set {mana.%player%} to 0
     
+# When you ear, gain 2 mana.
 on eat:
 	if {mana.%player%} is less than {maxmana.%player%}:
 		add 2 to {mana.%player%}
