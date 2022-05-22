@@ -52,8 +52,6 @@ on inventory click:
 	if event-inventory = (metadata tag "power-select-gui" of player):
 		# Cancel the clicking. This makes the Item unstealable.
 		cancel event
-		# Make sure the GUI closes when selecting a set.
-		close player's inventory
 		# Check which slot is being clicked.
 		if index of event-slot is 10:
 			if {mana.%player%} is equal to {maxmana.%player%}:
@@ -63,6 +61,8 @@ on inventory click:
 				set {mana.%player%} to 0
 			else:
 				message "&cYou must have %{maxmana.%player%} - {mana.%player%}% more mana to use this."
+			# Make sure the GUI closes when selecting a set.
+			close player's inventory
 		else if index of event-slot is 12:
 			if {mana.%player%} is equal to {maxmana.%player%}:
 				set {class.%player%} to 2
@@ -71,6 +71,7 @@ on inventory click:
 				set {mana.%player%} to 0
 			else:
 				message "&cYou must have %{maxmana.%player%} - {mana.%player%}% more mana to use this."
+			close player's inventory
 		else if index of event-slot is 14:
 			if {mana.%player%} is equal to {maxmana.%player%}:
 				set {class.%player%} to 3
@@ -79,6 +80,7 @@ on inventory click:
 				set {mana.%player%} to 0
 			else:
 				message "&cYou must have %{maxmana.%player%} - {mana.%player%}% more mana to use this."
+			close player's inventory
 		else if index of event-slot is 16:
 			if {mana.%player%} is equal to {maxmana.%player%}:
 				set {class.%player%} to 4
@@ -87,6 +89,7 @@ on inventory click:
 				set {mana.%player%} to 0
 			else:
 				message "&cYou must have %{maxmana.%player%} - {mana.%player%}% more mana to use this."
+			close player's inventory
 
 # When you die, and mana is at 100 or higher, revive the player (primary ability)
 on death of player:
