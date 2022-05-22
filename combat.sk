@@ -2,6 +2,9 @@
 on join:
 	set {mana.%player%} to 0
 	set {maxmana.%player%} to 100
+	if {class.%player%} is not set:
+		set {class.%player%} to 0
+		set {classname.%player%} to "&c&lNone"
 
 # Every 10 ticks (0.5 seconds) update the action bar.
 every 10 ticks:
