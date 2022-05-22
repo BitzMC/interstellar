@@ -56,6 +56,13 @@ command /manamax:
 			message "&6Mana has been maxed out!"
 			set {mana.%player%} to {maxmana.%player%}
 
+command /isbeacon:
+	trigger:
+		set metadata tag "interstellar-gui" of player to chest inventory with 3 rows named "&dInterstellar Beacon"
+		set slot 11 of metadata tag "interstellar-gui" of player to nether star named "&fInterstellar Powers" with lore "%nl%&7Multiple buffs directly from the planets."
+		set slot 15 of metadata tag "interstellar-gui" of player to beacon named "&fTravel" with lore "%nl%&7Travel between the 5 planets."
+		open (metadata tag "interstellar-gui" of player) to player
+
 # The GUI for the power sets.
 command /powerselect:
 	trigger:
