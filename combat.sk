@@ -3,7 +3,7 @@ on join:
 	set {mana.%player%} to 0
 	set {maxmana.%player%} to 100
 
-# Every 10 ricks (0.5 seconds) update the action bar.
+# Every 10 ticks (0.5 seconds) update the action bar.
 every 10 ticks:
 	loop all players:
 		send action bar "&b%{mana.%loop-player%}%&b/%{maxmana.%loop-player%}% Mana" to loop-player
