@@ -33,6 +33,34 @@ command /manamax:
 			message "&6Mana has been maxed out!"
 			set {mana.%player%} to {maxmana.%player%}
 
+# The GUI for the power sets.
+command /powerselect:
+	trigger:
+		set metadata tag "power-select-gui" of player to chest inventory with 3 rows named "&6Power Select"
+		set slot 10 of metadata tag "power-select-gui" of player to magma block named "&6&lX5-07" with lore "%nl%&7Used in causing massive amounts of%nl%&7damage, at the cost of yourself.%nl%%nl%&aLeft Click&f to join."
+		set slot 12 of metadata tag "power-select-gui" of player to obsidian named "&d&lX2-08" with lore "%nl%&7Used in causing high amounts of%nl%&7damage, while keeping yourself alive.%nl%%nl%&aLeft Click&f to join."
+		set slot 14 of metadata tag "power-select-gui" of player to iron block named "&7&lX4-05" with lore "%nl%&7Used in keeping you and your team alive.%nl%%nl%&aLeft Click&f to join."
+		set slot 16 of metadata tag "power-select-gui" of player to ice named "&b&lX5-04" with lore "%nl%&7Used in ensuring you stay alive%nl%&7damage, at the cost of doing much damage.%nl%%nl%&aLeft Click&f to join."
+		open (metadata tag "power-select-gui" of player) to player
+
+# For checking GUI events.
+on inventory click:
+	# Check if the clicked inventory is the one we just created.
+	if event-inventory = (metadata tag "power-select-gui" of player):
+		# Cancel the clicking. This makes the Item unstealable.
+		cancel event
+		# Make sure the GUI closes when selecting a set.
+		close player's inventory
+		# Check which slot is being clicked.
+		if index of event-slot is 10:
+			message "&fYou have joined &6&lX5-07&r&f!"
+		else if index of event-slot is 12:
+			message "&fYou have joined &d&lX2-08&r&f!"
+		else if index of event-slot is 14:
+			message "&fYou have joined &7&lX4-05&r&f!"
+		else if index of event-slot is 16:
+			message "&fYou have joined &b&lX5-04&r&f!"
+
 # When you die, and mana is at 100 or higher, revive the player (primary ability)
 on death of player:
 	if {mana.%player%} is greater than 99:
