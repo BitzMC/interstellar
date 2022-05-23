@@ -7,10 +7,8 @@ on join:
 		set {classname.%player%} to "&c&lNone"
 	if {tutorial.%player%} is equal to 1:
 		wait 15 seconds
-		message "&aMessage recieved! Downloading..."
-		wait 1.829 seconds
-		message "&aDownload complete! Displaying..."
-		wait 1.634 second
+		message "&aMessage recieved!"
+		wait 3 seconds
 		message "&f[&6Instructor&f]&r&f Hello %player%! I'm your instructor from training. I'd like to give you a quick rundown of everything. The planet you are on is &6X1-03&f, the first planet we've ever found suitable for life. Way before you started your training for this, many people have come down here."
 		wait 15 seconds
 		message "&f[&6Instructor&f]&r&f If you do find somebody else, don't be shy. You can try to work with them or just ignore each-other. If they attack you, try not to engage in a fight. Use the tools you have to defend yourself."
@@ -20,10 +18,6 @@ on join:
 		message "&f[&6Instructor&f]&r&f Unfortunately, you aren't the only thing down there. There are lots of hostile creatures that can easily defeat you. Make sure to use the interstellar powers, the energy from the surrounding planets. You can select one by using the &6Interstellar Beacon&f."
 		wait 15 seconds
 		message "&f[&6Instructor&f]&r&f Other than that, your all caught up! We'll talk again once you are on the planet &6X4-05&f."
-		wait 5 seconds
-		message "&aMessage finished! Archiving..."
-		wait 0.151 seconds
-		message "&aArchive stored in /home/%player%/archives as Introduction.tar.gz."
 		set {tutorial.%player%} to 1
 
 # Every 10 ticks (0.5 seconds) update the action bar.
