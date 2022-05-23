@@ -63,16 +63,6 @@ command /isbeacon:
 		set slot 15 of metadata tag "interstellar-gui" of player to beacon named "&fTravel" with lore "%nl%&7Travel between the 5 planets."
 		open (metadata tag "interstellar-gui" of player) to player
 
-# The GUI for the power sets.
-command /powerselect:
-	trigger:
-		set metadata tag "power-select-gui" of player to chest inventory with 3 rows named "&6Power Select"
-		set slot 10 of metadata tag "power-select-gui" of player to magma block named "&6&lX5-07" with lore "%nl%&7Used in causing massive amounts of%nl%&7damage, at the cost of your own life.%nl%%nl%&fRequires %{maxmana.%player%}% Mana!%nl%&aClick&f to join."
-		set slot 12 of metadata tag "power-select-gui" of player to obsidian named "&d&lX2-08" with lore "%nl%&7Used in causing high amounts of damage.%nl%%nl%&fRequires %{maxmana.%player%}% Mana!%nl%&aClick&f to join."
-		set slot 14 of metadata tag "power-select-gui" of player to iron block named "&7&lX4-05" with lore "%nl%&7Used in keeping you and your team alive.%nl%%nl%&fRequires %{maxmana.%player%}% Mana!%nl%&aClick&f to join."
-		set slot 16 of metadata tag "power-select-gui" of player to ice named "&b&lX5-04" with lore "%nl%&7Used in guaranteeing you, and your team stay alive,%nl%&7at the cost of not doing much damage.%nl%%nl%&6NOTICE:&r&7 This class is recommended for%nl%&7experienced players, you may find it too%nl%&7difficult to time correctly.%nl%%nl%&fRequires %{maxmana.%player%}% Mana!%nl%&aClick&f to join."
-		open (metadata tag "power-select-gui" of player) to player
-
 # For checking GUI events.
 on inventory click:
 	# Check if the clicked inventory is the one we just created.
@@ -117,6 +107,41 @@ on inventory click:
 			else:
 				message "&cYou must have %{maxmana.%player%} - {mana.%player%}% more mana to use this."
 			close player's inventory
+		else if index of event-slot is 18:
+			make player execute command "/isbeacon"
+
+	if event-inventory = (metadata tag "travel-gui" of player):
+		# Cancel the clicking. This makes the Item unstealable.
+		cancel event
+		# Check which slot is being clicked.
+		if index of event-slot is 10:
+			if {mana.%player%} is equal to {maxmana.%player%}:
+				teleport player to location at -64, 67, -5 in world "world_nether"
+				message "&fYou have teleported to &6&lX5-07&r&f!"
+				set {mana.%player%} to 0
+			else:
+				message "&cYou must have %{maxmana.%player%} - {mana.%player%}% more mana to use this."
+				close player's inventory
+		else if index of event-slot is 18:
+			make player execute command "/isbeacon"
+
+	if event-inventory = (metadata tag "interstellar-gui" of player):
+		cancel event
+		if index of event-slot is 11:
+			set metadata tag "power-select-gui" of player to chest inventory with 3 rows named "&6Power Select"
+			set slot 10 of metadata tag "power-select-gui" of player to magma block named "&6&lX5-07" with lore "%nl%&7Used in causing massive amounts of%nl%&7damage, at the cost of your own life.%nl%%nl%&fRequires %{maxmana.%player%}% Mana!%nl%&aClick&f to join."
+			set slot 12 of metadata tag "power-select-gui" of player to obsidian named "&d&lX2-08" with lore "%nl%&7Used in causing high amounts of damage.%nl%%nl%&fRequires %{maxmana.%player%}% Mana!%nl%&aClick&f to join."
+			set slot 14 of metadata tag "power-select-gui" of player to iron block named "&7&lX4-05" with lore "%nl%&7Used in keeping you and your team alive.%nl%%nl%&fRequires %{maxmana.%player%}% Mana!%nl%&aClick&f to join."
+			set slot 16 of metadata tag "power-select-gui" of player to ice named "&b&lX5-04" with lore "%nl%&7Used in guaranteeing you, and your team stay alive,%nl%&7at the cost of not doing much damage.%nl%%nl%&6NOTICE:&r&7 This class is recommended for%nl%&7experienced players, you may find it too%nl%&7difficult to time correctly.%nl%%nl%&fRequires %{maxmana.%player%}% Mana!%nl%&aClick&f to join."
+			set slot 18 of metadata tag "power-select-gui" of player to arrow named "&cBack"
+			open (metadata tag "power-select-gui" of player) to player
+
+		if index of event-slot is 15:
+			set metadata tag "travel-gui" of player to chest inventory with 3 rows named "&6Power Select"
+			set slot 10 of metadata tag "travel-gui" of player to magma block named "&6&lX5-07" with lore "%nl%&aClick&f to travel."
+			set slot 18 of metadata tag "travel-gui" of player to arrow named "&cBack"
+			open (metadata tag "travel-gui" of player) to player
+				
 
 # When you die, and mana is at 100 or higher, revive the player (primary ability)
 on death of player:
