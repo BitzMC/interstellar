@@ -20,6 +20,21 @@ on join:
 		message "&f[&6Instructor&f]&r&f Other than that, your all caught up! We'll talk again once you are on the planet &6X4-05&f."
 		set {tutorial.%player%} to 1
 
+function ascendToSpace(p: player):
+	loop 30 times:
+		set velocity of {_p} to new Vector 0, 0.05, 0
+		play cloud at {_p}
+		wait a tick
+	loop 80 times:
+		set velocity of {_p} to new Vector 0, 50, 0
+		play cloud at {_p}
+		wait a tick
+	apply potion of blindness of tier 1 to {_p} for 4 seconds
+	loop 80 times:
+		set velocity of {_p} to new Vector 0, 50, 0
+		play cloud at {_p}
+		wait a tick
+
 # Every 10 ticks (0.5 seconds) update the action bar.
 every 10 ticks:
 	loop all players:
@@ -114,6 +129,9 @@ on inventory click:
 		# Check which slot is being clicked.
 		if index of event-slot is 10:
 			if {mana.%player%} is equal to {maxmana.%player%}:
+				close player's inventory
+				ascendToSpace(player)
+				wait 9.5 seconds
 				apply potion of resistance of tier 20 to player for 8 seconds
 				teleport player to location at -64, 67, -5 in world "world_nether"
 				message "&fYou have teleported to &6&lX5-07&r&f!"
