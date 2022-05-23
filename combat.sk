@@ -68,6 +68,7 @@ on inventory click:
 		# Check which slot is being clicked.
 		if index of event-slot is 10:
 			if {mana.%player%} is equal to {maxmana.%player%}:
+				play sound "block.beacon.power_select" with volume 2 to the player
 				set {class.%player%} to 1
 				set {classname.%player%} to "&6&lX5-07"
 				message "&fYou are now using &6&lX5-07&r&f!"
@@ -78,6 +79,7 @@ on inventory click:
 			close player's inventory
 		else if index of event-slot is 12:
 			if {mana.%player%} is equal to {maxmana.%player%}:
+				play sound "block.beacon.power_select" with volume 2 to the player
 				set {class.%player%} to 2
 				set {classname.%player%} to "&d&lX2-08"
 				message "&fYou are now using &d&lX2-08&r&f!"
@@ -87,6 +89,7 @@ on inventory click:
 			close player's inventory
 		else if index of event-slot is 14:
 			if {mana.%player%} is equal to {maxmana.%player%}:
+				play sound "block.beacon.power_select" with volume 2 to the player
 				set {class.%player%} to 3
 				set {classname.%player%} to "&7&lX4-05"
 				message "&fYou are now using &7&lX4-05&r&f!"
@@ -96,6 +99,7 @@ on inventory click:
 			close player's inventory
 		else if index of event-slot is 16:
 			if {mana.%player%} is equal to {maxmana.%player%}:
+				play sound "block.beacon.power_select" with volume 2 to the player
 				set {class.%player%} to 4
 				set {classname.%player%} to "&b&lX5-04"
 				message "&fYou are now using &b&lX5-04&r&f!"
