@@ -144,7 +144,7 @@ on inventory click:
 
 		if index of event-slot is 15:
 			set metadata tag "travel-gui" of player to chest inventory with 3 rows named "&6Power Select"
-			set slot 10 of metadata tag "travel-gui" of player to magma block named "&6&lX5-07" with lore "%nl%&aClick&f to travel."
+			set slot 10 of metadata tag "travel-gui" of player to magma block named "&6&lX5-07" with lore "%nl%&fRequires %{maxmana.%player%}% Mana!%nl%&aClick&f to travel."
 			set slot 18 of metadata tag "travel-gui" of player to arrow named "&cBack"
 			open (metadata tag "travel-gui" of player) to player
 				
