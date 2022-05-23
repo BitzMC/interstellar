@@ -112,6 +112,7 @@ on inventory click:
 		# Check which slot is being clicked.
 		if index of event-slot is 10:
 			if {mana.%player%} is equal to {maxmana.%player%}:
+				apply potion of resistance of tier 20 to player for 8 seconds
 				teleport player to location at -64, 67, -5 in world "world_nether"
 				message "&fYou have teleported to &6&lX5-07&r&f!"
 				set {mana.%player%} to 0
