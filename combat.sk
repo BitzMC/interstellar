@@ -7,8 +7,6 @@ on join:
 		set {classname.%player%} to "&c&lNone"
 	if {tutorial.%player%} is equal to 1:
 		wait 15 seconds
-		message "&aMessage recieved!"
-		wait 3 seconds
 		message "&f[&6Instructor&f]&r&f Hello %player%! I'm your instructor from training. I'd like to give you a quick rundown of everything. The planet you are on is &6X1-03&f, the first planet we've ever found suitable for life. Way before you started your training for this, many people have come down here."
 		wait 15 seconds
 		message "&f[&6Instructor&f]&r&f If you do find somebody else, don't be shy. You can try to work with them or just ignore each-other. If they attack you, try not to engage in a fight. Use the tools you have to defend yourself."
