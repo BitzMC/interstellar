@@ -15,6 +15,8 @@ on join:
 		wait 15 seconds
 		message "&f[&6Instructor&f]&r&f To protect your property, use a golden shovel to create the border of the property. You are limited with how much area you can take. Every hour you get more, and you can buy land with &6/buyclaim&f and the amount of blocks you would like."
 		wait 15 seconds
+		message "&f[&6Instructor&f]&r&f Make sure your base is safe. Meteors periodically fall down on to the planet, causing a large amount of damage."
+		wait 10 seconds
 		message "&f[&6Instructor&f]&r&f Unfortunately, you aren't the only thing down there. There are lots of hostile creatures that can easily defeat you. Make sure to use the interstellar powers, the energy from the surrounding planets. You can select one by using the &6Interstellar Beacon&f."
 		wait 15 seconds
 		message "&f[&6Instructor&f]&r&f Other than that, your all caught up! We'll talk again once you are on the planet &6X4-05&f."
