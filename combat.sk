@@ -120,6 +120,13 @@ on inventory click:
 				teleport player to location at -64, 67, -5 in world "world_nether"
 				message "&fYou have teleported to &6&lX5-07&r&f!"
 				set {mana.%player%} to 0
+				if {planet1dialog.%player%} is not set:
+					wait 5 seconds
+					message "&f[&6Instructor&f]&r&f This planet has a very barren surface, that's why you're underground. Be careful though! Many enemies... and... pigs here do lot's of damage, but they are somewhat lacking in defense."
+					wait 10 seconds
+					message "&f[&6Instructor&f]&r&f I suggest using X5-04's abilities here, but that's up to you."
+					set {planet1dialog.%player%} to 1
+
 			else:
 				message "&cYou must have %{maxmana.%player%} - {mana.%player%}% more mana to use this."
 				close player's inventory
