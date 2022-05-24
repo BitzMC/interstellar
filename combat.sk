@@ -5,7 +5,7 @@ on join:
 	if {class.%player%} is not set:
 		set {class.%player%} to 0
 		set {classname.%player%} to "&c&lNone"
-	if {tutorial.%player%} is equal to 1:
+	if {tutorial.%player%} is not set:
 		wait 15 seconds
 		message "&f[&6Instructor&f]&r&f Hello %player%! I'm your instructor from training. I'd like to give you a quick rundown of everything. The planet you are on is &6X1-03&f, the first planet we've ever found suitable for life. Way before you started your training for this, many people have come down here."
 		wait 15 seconds
@@ -165,7 +165,22 @@ on inventory click:
 			set slot 10 of metadata tag "travel-gui" of player to magma block named "&6&lX5-07" with lore "%nl%&fRequires %{maxmana.%player%}% Mana!%nl%&aClick&f to travel."
 			set slot 18 of metadata tag "travel-gui" of player to arrow named "&cBack"
 			open (metadata tag "travel-gui" of player) to player
-				
+
+#================================ X5-07 ================================#
+
+# If the player has 15 mana or higher, it will ignite things around you when a sword is
+# right-clicked while crouching.
+on right click with sword:
+	if {class.%player%} is equal to 1:
+		player is sneaking
+		if {mana.%player%} is greater than 14:
+			play sound "block.beacon.power_select" with volume 2 to the player
+			add -15 to {mana.%player%}
+			loop all entities in radius 8 of player:
+				damage loop-entity by 2 hearts
+
+
+#================================ X5-04 ================================#
 
 # When you die, and mana is at 100 or higher, revive the player (primary ability)
 on death of player:
@@ -202,8 +217,6 @@ on death of player:
 				play cloud at the player
 				wait a tick
 
-# If the player has 35 mana or higher, give a small window of invincibility when a sword is
-# right-clicked while crouching.
 on right click with sword:
 	if {class.%player%} is equal to 4:
 		player is sneaking
