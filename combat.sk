@@ -178,11 +178,21 @@ on right click with sword:
 			add -15 to {mana.%player%}
 			loop all entities in radius 8 of player:
 				damage loop-entity by 2 hearts
+				play mobspawner flames at the loop-entity
+
+on damage:
+	if {class.%attacker%} is equal to 1:
+		if %damage% > 8:
+			attacker is sneaking
+			if {mana.%attacker%} is greater than 49:
+				play sound "block.beacon.power_select" with volume 2 to the attacker
+				add -50 to {mana.%attacker%}
+				apply potion of absorption of tier 8 to attacker for 12 seconds
 
 
 #================================ X5-04 ================================#
 
-# When you die, and mana is at 100 or higher, revive the player (primary ability)
+# When you die, and mana is at 100 or higher, revive the player
 on death of player:
 	if {class.%player%} is equal to 4:
 		if {mana.%player%} is greater than 99:
