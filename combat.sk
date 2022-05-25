@@ -1,6 +1,7 @@
 # When players join, make sure the variables are set.
 on join:
-	set {mana.%player%} to 0
+	if {mana.%player%} is not set:
+		set {mana.%player%} to 0
 	set {maxmana.%player%} to 100
 	if {class.%player%} is not set:
 		set {class.%player%} to 0
