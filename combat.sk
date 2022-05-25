@@ -40,8 +40,8 @@ every 10 ticks:
 	loop all players:
 		send action bar "&b%{mana.%loop-player%}%&b/%{maxmana.%loop-player%}% Mana&r&7 |&r %{classname.%loop-player%}%" to loop-player
 
-# Every 100 ticks (5 seconds) every player gets 1 more mana if not full.
-every 100 ticks:
+# Every 50 ticks (2.5 seconds) every player gets 1 more mana if not full.
+every 50 ticks:
 	loop all players:
 		if {mana.%loop-player%} is greater than {maxmana.%loop-player%} - 1:
 			set {mana.%loop-player%} to {maxmana.%loop-player%}
