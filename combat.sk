@@ -166,6 +166,23 @@ on inventory click:
 			set slot 18 of metadata tag "travel-gui" of player to arrow named "&cBack"
 			open (metadata tag "travel-gui" of player) to player
 
+every 1 second:
+	loop all players:
+		if {class.%loop-player%} is equal to 1:
+			if loop-player doesn't have potion strength:
+				apply potion of strength of tier 2 without particles to loop-player for 30 seconds
+		if {class.%loop-player%} is equal to 2:
+			if loop-player doesn't have potion strength:
+				apply potion of strength of tier 1 without particles to loop-player for 30 seconds
+		if {class.%loop-player%} is equal to 3:
+			if loop-player doesn't have potion regeneration:
+				apply potion of regeneration of tier 1 without particles to loop-player for 30 seconds
+		if {class.%loop-player%} is equal to 4:
+			if loop-player doesn't have potion regeneration:
+				apply potion of regeneration of tier 2 without particles to loop-player for 30 seconds
+			if loop-player doesn't have potion weakness:
+				apply potion of weakness of tier 1 without particles to loop-player for 30 seconds
+
 #================================ X5-07 ================================#
 
 # If the player has 15 mana or higher, it will ignite things around you when a sword is
@@ -176,19 +193,61 @@ on right click with sword:
 		if {mana.%player%} is greater than 14:
 			play sound "block.beacon.power_select" with volume 2 to the player
 			add -15 to {mana.%player%}
+			apply potion of resistance of tier 20 to player for 0.1 second
 			loop all entities in radius 8 of player:
 				damage loop-entity by 2 hearts
 				play mobspawner flames at the loop-entity
 
 on damage:
 	if {class.%attacker%} is equal to 1:
-		if %damage% > 8:
-			attacker is sneaking
-			if {mana.%attacker%} is greater than 49:
-				play sound "block.beacon.power_select" with volume 2 to the attacker
-				add -50 to {mana.%attacker%}
-				apply potion of absorption of tier 8 to attacker for 12 seconds
+		attacker is sneaking
+		if {mana.%attacker%} is greater than 49:
+			play sound "block.beacon.power_select" with volume 2 to the attacker
+			add -50 to {mana.%attacker%}
+			apply potion of resistance of tier 20 to attacker for 0.1 second
+			create safe explosion of force 2 at victim
 
+
+#================================ X2-08 ================================#
+
+on right click with sword:
+	if {class.%player%} is equal to 2:
+		player is sneaking
+		if {mana.%player%} is greater than 14:
+			play sound "block.beacon.power_select" with volume 2 to the player
+			add -15 to {mana.%player%}
+			loop all entities in radius 8 blocks of player:
+				if loop-entity isn't a player:
+					apply potion of slowness of tier 20 without particles to loop-entity for 4 seconds
+
+on damage:
+	if {class.%attacker%} is equal to 2:
+		attacker is sneaking
+		if {mana.%attacker%} is greater than 24:
+			play sound "block.beacon.power_select" with volume 2 to the attacker
+			add -25 to {mana.%attacker%}
+			apply potion of levitation of tier 100 without particles to victim for 0.1 seconds
+
+
+#================================ X4-05 ================================#
+
+on damage:
+	if {class.%victim%} is equal to 3:
+		victim is sneaking
+		if {mana.%victim%} is greater than 24:
+			play sound "block.beacon.power_select" with volume 2 to the attacker
+			add -25 to {mana.%victim%}
+			damage attacker by 6
+
+on right click with sword:
+	if {class.%player%} is equal to 3:
+		player is sneaking
+		if {mana.%player%} is greater than 24:
+			play sound "block.beacon.power_select" with volume 2 to the player
+			add -25 to {mana.%player%}
+			loop all entities in radius 8 blocks of player:
+				if loop-entity isn't a player:
+					apply potion of wither of tier 2 without particles to loop-entity for 8 seconds
 
 #================================ X5-04 ================================#
 
@@ -233,8 +292,6 @@ on right click with sword:
 		if {mana.%player%} is greater than 34:
 			play sound "block.beacon.power_select" with volume 2 to the player
 			add -35 to {mana.%player%}
-			remove absorption from player
-			remove regeneration from player
 			apply potion of resistance of tier 20 to player for 2 seconds
 
 # Reset players mana on respawn.
