@@ -12,6 +12,8 @@ on join:
 		wait 15 seconds
 		message "&f[&6Instructor&f]&r&f Unfortunately, you guys aren't the only things down there. There are lots of hostile creatures that can easily defeat you. Make sure to use the interstellar powers, the energy from the surrounding planets. You can select one by using the &6Interstellar Beacon&f."
 		wait 15 seconds
+		message "&f[&6Instructor&f]&r&f Open the &6Interstellar Beacon&f with &6/isbeacon&f."
+		wait 5 seconds
 		message "&f[&6Instructor&f]&r&f Other than that, your all caught up! We'll talk again once you are on the planet &6X4-05&f."
 		set {tutorial.%player%} to 1
 
