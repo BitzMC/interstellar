@@ -68,8 +68,8 @@ command /manamax:
 command /isbeacon:
 	trigger:
 		set metadata tag "interstellar-gui" of player to chest inventory with 3 rows named "&dInterstellar Beacon"
-		set slot 11 of metadata tag "interstellar-gui" of player to nether star named "&fInterstellar Powers" with lore "%nl%&7Multiple buffs directly from the planets."
-		set slot 15 of metadata tag "interstellar-gui" of player to beacon named "&fTravel" with lore "%nl%&7Travel between the 5 planets."
+		set slot 11 of metadata tag "interstellar-gui" of player to nether star named "&6Interstellar Powers" with lore "%nl%&7Multiple buffs directly from the planets."
+		set slot 15 of metadata tag "interstellar-gui" of player to beacon named "&3Travel" with lore "%nl%&7Travel between the 5 planets."
 		open (metadata tag "interstellar-gui" of player) to player
 
 # For checking GUI events.
@@ -161,7 +161,7 @@ on inventory click:
 			open (metadata tag "power-select-gui" of player) to player
 
 		if index of event-slot is 15:
-			set metadata tag "travel-gui" of player to chest inventory with 3 rows named "&6Power Select"
+			set metadata tag "travel-gui" of player to chest inventory with 3 rows named "&3Travel"
 			set slot 10 of metadata tag "travel-gui" of player to magma block named "&6&lX5-07" with lore "%nl%&fRequires %{maxmana.%player%}% Mana!%nl%&aClick&f to travel."
 			set slot 18 of metadata tag "travel-gui" of player to arrow named "&cBack"
 			open (metadata tag "travel-gui" of player) to player
