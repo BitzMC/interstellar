@@ -15,6 +15,13 @@ on join:
 		message "&f[&6Instructor&f]&r&f Other than that, your all caught up! We'll talk again once you are on the planet &6X4-05&f."
 		set {tutorial.%player%} to 1
 
+# Disable portals
+on portal create:
+	cancel event
+
+on player portal:
+	cancel event
+
 function ascendToSpace(p: player):
 	loop 30 times:
 		set velocity of {_p} to new Vector 0, 0.05, 0
