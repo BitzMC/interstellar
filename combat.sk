@@ -2,11 +2,43 @@
 on join:
 	set {mana.%player%} to 0
 	set {maxmana.%player%} to 100
+	if {class.%player%} is not set:
+		set {class.%player%} to 0
+		set {classname.%player%} to "&c&lNone"
+	if {tutorial.%player%} is not set:
+		wait 15 seconds
+		message "&f[&6Instructor&f]&r&f Hello %player%! I'm your instructor from training. I'd like to give you a quick rundown of everything. The planet you are on is &6X1-03&f, the first planet we've ever found suitable for life. Way before you started your training for this, many people have come down here."
+		wait 15 seconds
+		message "&f[&6Instructor&f]&r&f If you do find somebody else, don't be shy. You can try to work with them or just ignore each-other. If they attack you, try not to engage in a fight. Use the tools you have to defend yourself."
+		wait 15 seconds
+		message "&f[&6Instructor&f]&r&f To protect your property, use a golden shovel to create the border of the property. You are limited with how much area you can take. Every hour you get more, and you can buy land with &6/buyclaim&f and the amount of blocks you would like."
+		wait 15 seconds
+		message "&f[&6Instructor&f]&r&f Make sure your base is safe. Meteors periodically fall down on to the planet, causing a large amount of damage."
+		wait 10 seconds
+		message "&f[&6Instructor&f]&r&f Unfortunately, you aren't the only thing down there. There are lots of hostile creatures that can easily defeat you. Make sure to use the interstellar powers, the energy from the surrounding planets. You can select one by using the &6Interstellar Beacon&f."
+		wait 15 seconds
+		message "&f[&6Instructor&f]&r&f Other than that, your all caught up! We'll talk again once you are on the planet &6X4-05&f."
+		set {tutorial.%player%} to 1
+
+function ascendToSpace(p: player):
+	loop 30 times:
+		set velocity of {_p} to new Vector 0, 0.05, 0
+		play cloud at {_p}
+		wait a tick
+	loop 80 times:
+		set velocity of {_p} to new Vector 0, 50, 0
+		play cloud at {_p}
+		wait a tick
+	apply potion of blindness of tier 1 to {_p} for 4 seconds
+	loop 80 times:
+		set velocity of {_p} to new Vector 0, 50, 0
+		play cloud at {_p}
+		wait a tick
 
 # Every 10 ticks (0.5 seconds) update the action bar.
 every 10 ticks:
 	loop all players:
-		send action bar "&b%{mana.%loop-player%}%&b/%{maxmana.%loop-player%}% Mana" to loop-player
+		send action bar "&b%{mana.%loop-player%}%&b/%{maxmana.%loop-player%}% Mana&r&7 |&r %{classname.%loop-player%}%" to loop-player
 
 # Every 100 ticks (5 seconds) every player gets 1 more mana if not full.
 every 100 ticks:
@@ -33,52 +65,234 @@ command /manamax:
 			message "&6Mana has been maxed out!"
 			set {mana.%player%} to {maxmana.%player%}
 
-# When you die, and mana is at 100 or higher, revive the player (primary ability)
-on death of player:
-	if {mana.%player%} is greater than 99:
-		# Sci-fi sound effects.
-		play sound "block.beacon.power_select" with volume 2 to the player
-		add -100 to {mana.%player%}
-		cancel event
-		set player's health to 0.0001
-		set player's hunger to 2
-		apply potion of resistance of tier 20 to player for 12 seconds
-		apply potion of night vision of tier 1 to player for 3 seconds
-		apply potion of blindness of tier 1 to player for 1.5 seconds
-		apply potion of glowing of tier 1 to player for 3 seconds
-		message "&cReviving..."
-		loop 60 times:
-			# Move the player up continuously upwards.
-			set velocity of player to new Vector 0, 0.1, 0
-			play cloud at the player
-			wait a tick
-		loop 3 times:
-			# And slam the player back on to the ground
-			set velocity of player to new Vector 0, -1.65, 0
-			play mobspawner flames at the player
-			wait a tick
-		# Make fake lightning that doesn't do anything.
-		strike fake fake lightning at player
-		play sound "ambient.weather.thunder" with volume 2 to the player
-		apply potion of fire resistance of tier 1 to player for 30 seconds
-		send title "" with subtitle "&cYou have been revived!" to player for 2 seconds with fadein 0.5 second and fade out 0.5 second
-		#create a safe explosion of force 3 at the player
-		loop 160 times:
-			play cloud at the player
-			wait a tick
+command /isbeacon:
+	trigger:
+		set metadata tag "interstellar-gui" of player to chest inventory with 3 rows named "&dInterstellar Beacon"
+		set slot 11 of metadata tag "interstellar-gui" of player to nether star named "&fInterstellar Powers" with lore "%nl%&7Multiple buffs directly from the planets."
+		set slot 15 of metadata tag "interstellar-gui" of player to beacon named "&fTravel" with lore "%nl%&7Travel between the 5 planets."
+		open (metadata tag "interstellar-gui" of player) to player
 
-# If the player has 35 mana or higher, give a small window of invincibility when a sword is
+# For checking GUI events.
+on inventory click:
+	# Check if the clicked inventory is the one we just created.
+	if event-inventory = (metadata tag "power-select-gui" of player):
+		# Cancel the clicking. This makes the Item unstealable.
+		cancel event
+		# Check which slot is being clicked.
+		if index of event-slot is 10:
+			if {mana.%player%} is equal to {maxmana.%player%}:
+				play sound "block.beacon.power_select" with volume 2 to the player
+				set {class.%player%} to 1
+				set {classname.%player%} to "&6&lX5-07"
+				message "&fYou are now using &6&lX5-07&r&f!"
+				set {mana.%player%} to 0
+			else:
+				message "&cYou must have %{maxmana.%player%} - {mana.%player%}% more mana to use this."
+			# Make sure the GUI closes when selecting a set.
+			close player's inventory
+		else if index of event-slot is 12:
+			if {mana.%player%} is equal to {maxmana.%player%}:
+				play sound "block.beacon.power_select" with volume 2 to the player
+				set {class.%player%} to 2
+				set {classname.%player%} to "&d&lX2-08"
+				message "&fYou are now using &d&lX2-08&r&f!"
+				set {mana.%player%} to 0
+			else:
+				message "&cYou must have %{maxmana.%player%} - {mana.%player%}% more mana to use this."
+			close player's inventory
+		else if index of event-slot is 14:
+			if {mana.%player%} is equal to {maxmana.%player%}:
+				play sound "block.beacon.power_select" with volume 2 to the player
+				set {class.%player%} to 3
+				set {classname.%player%} to "&7&lX4-05"
+				message "&fYou are now using &7&lX4-05&r&f!"
+				set {mana.%player%} to 0
+			else:
+				message "&cYou must have %{maxmana.%player%} - {mana.%player%}% more mana to use this."
+			close player's inventory
+		else if index of event-slot is 16:
+			if {mana.%player%} is equal to {maxmana.%player%}:
+				play sound "block.beacon.power_select" with volume 2 to the player
+				set {class.%player%} to 4
+				set {classname.%player%} to "&b&lX5-04"
+				message "&fYou are now using &b&lX5-04&r&f!"
+				set {mana.%player%} to 0
+			else:
+				message "&cYou must have %{maxmana.%player%} - {mana.%player%}% more mana to use this."
+			close player's inventory
+		else if index of event-slot is 18:
+			make player execute command "/isbeacon"
+
+	if event-inventory = (metadata tag "travel-gui" of player):
+		# Cancel the clicking. This makes the Item unstealable.
+		cancel event
+		# Check which slot is being clicked.
+		if index of event-slot is 10:
+			if {mana.%player%} is equal to {maxmana.%player%}:
+				close player's inventory
+				ascendToSpace(player)
+				wait 9.5 seconds
+				apply potion of resistance of tier 20 to player for 8 seconds
+				teleport player to location at -64, 67, -5 in world "world_nether"
+				message "&fYou have teleported to &6&lX5-07&r&f!"
+				set {mana.%player%} to 0
+				if {planet1dialog.%player%} is not set:
+					wait 5 seconds
+					message "&f[&6Instructor&f]&r&f This planet has a very barren surface, that's why you're underground. Be careful though! Many enemies... and... pigs here do lot's of damage, but they are somewhat lacking in defense."
+					wait 10 seconds
+					message "&f[&6Instructor&f]&r&f I suggest using X5-04's abilities here, but that's up to you."
+					set {planet1dialog.%player%} to 1
+
+			else:
+				message "&cYou must have %{maxmana.%player%} - {mana.%player%}% more mana to use this."
+				close player's inventory
+		else if index of event-slot is 18:
+			make player execute command "/isbeacon"
+
+	if event-inventory = (metadata tag "interstellar-gui" of player):
+		cancel event
+		if index of event-slot is 11:
+			set metadata tag "power-select-gui" of player to chest inventory with 3 rows named "&6Power Select"
+			set slot 10 of metadata tag "power-select-gui" of player to magma block named "&6&lX5-07" with lore "%nl%&7Used in causing massive amounts of%nl%&7damage, at the cost of your own life.%nl%%nl%&fRequires %{maxmana.%player%}% Mana!%nl%&aClick&f to join."
+			set slot 12 of metadata tag "power-select-gui" of player to obsidian named "&d&lX2-08" with lore "%nl%&7Used in causing high amounts of damage.%nl%%nl%&fRequires %{maxmana.%player%}% Mana!%nl%&aClick&f to join."
+			set slot 14 of metadata tag "power-select-gui" of player to iron block named "&7&lX4-05" with lore "%nl%&7Used in keeping you and your team alive.%nl%%nl%&fRequires %{maxmana.%player%}% Mana!%nl%&aClick&f to join."
+			set slot 16 of metadata tag "power-select-gui" of player to ice named "&b&lX5-04" with lore "%nl%&7Used in guaranteeing you, and your team stay alive,%nl%&7at the cost of not doing much damage.%nl%%nl%&6NOTICE:&r&7 This class is recommended for%nl%&7experienced players, you may find it too%nl%&7difficult to time correctly.%nl%%nl%&fRequires %{maxmana.%player%}% Mana!%nl%&aClick&f to join."
+			set slot 18 of metadata tag "power-select-gui" of player to arrow named "&cBack"
+			open (metadata tag "power-select-gui" of player) to player
+
+		if index of event-slot is 15:
+			set metadata tag "travel-gui" of player to chest inventory with 3 rows named "&6Power Select"
+			set slot 10 of metadata tag "travel-gui" of player to magma block named "&6&lX5-07" with lore "%nl%&fRequires %{maxmana.%player%}% Mana!%nl%&aClick&f to travel."
+			set slot 18 of metadata tag "travel-gui" of player to arrow named "&cBack"
+			open (metadata tag "travel-gui" of player) to player
+
+every 1 second:
+	loop all players:
+		if {class.%loop-player%} is equal to 1:
+			if loop-player doesn't have potion strength:
+				apply potion of strength of tier 2 without particles to loop-player for 30 seconds
+		if {class.%loop-player%} is equal to 2:
+			if loop-player doesn't have potion strength:
+				apply potion of strength of tier 1 without particles to loop-player for 30 seconds
+		if {class.%loop-player%} is equal to 3:
+			if loop-player doesn't have potion regeneration:
+				apply potion of regeneration of tier 1 without particles to loop-player for 30 seconds
+		if {class.%loop-player%} is equal to 4:
+			if loop-player doesn't have potion regeneration:
+				apply potion of regeneration of tier 2 without particles to loop-player for 30 seconds
+			if loop-player doesn't have potion weakness:
+				apply potion of weakness of tier 1 without particles to loop-player for 30 seconds
+
+#================================ X5-07 ================================#
+
+# If the player has 15 mana or higher, it will ignite things around you when a sword is
 # right-clicked while crouching.
 on right click with sword:
-	player is sneaking
-	if {mana.%player%} is greater than 34:
-		play sound "block.beacon.power_select" with volume 2 to the player
-		add -35 to {mana.%player%}
-		remove absorption from player
-		remove regeneration from player
-		apply potion of absorption of tier 1 to player for 8 seconds
-		apply potion of regeneration of tier 1 to player for 8 seconds
-		apply potion of resistance of tier 20 to player for 1 seconds
+	if {class.%player%} is equal to 1:
+		player is sneaking
+		if {mana.%player%} is greater than 14:
+			play sound "block.beacon.power_select" with volume 2 to the player
+			add -15 to {mana.%player%}
+			apply potion of resistance of tier 20 to player for 0.1 second
+			loop all entities in radius 8 of player:
+				damage loop-entity by 2 hearts
+				play mobspawner flames at the loop-entity
+
+on damage:
+	if {class.%attacker%} is equal to 1:
+		attacker is sneaking
+		if {mana.%attacker%} is greater than 49:
+			play sound "block.beacon.power_select" with volume 2 to the attacker
+			add -50 to {mana.%attacker%}
+			apply potion of resistance of tier 20 to attacker for 0.1 second
+			create safe explosion of force 2 at victim
+
+
+#================================ X2-08 ================================#
+
+on right click with sword:
+	if {class.%player%} is equal to 2:
+		player is sneaking
+		if {mana.%player%} is greater than 14:
+			play sound "block.beacon.power_select" with volume 2 to the player
+			add -15 to {mana.%player%}
+			loop all entities in radius 8 blocks of player:
+				if loop-entity isn't a player:
+					apply potion of slowness of tier 20 without particles to loop-entity for 4 seconds
+
+on damage:
+	if {class.%attacker%} is equal to 2:
+		attacker is sneaking
+		if {mana.%attacker%} is greater than 24:
+			play sound "block.beacon.power_select" with volume 2 to the attacker
+			add -25 to {mana.%attacker%}
+			apply potion of levitation of tier 100 without particles to victim for 0.1 seconds
+
+
+#================================ X4-05 ================================#
+
+on damage:
+	if {class.%victim%} is equal to 3:
+		victim is sneaking
+		if {mana.%victim%} is greater than 24:
+			play sound "block.beacon.power_select" with volume 2 to the attacker
+			add -25 to {mana.%victim%}
+			damage attacker by 6
+
+on right click with sword:
+	if {class.%player%} is equal to 3:
+		player is sneaking
+		if {mana.%player%} is greater than 24:
+			play sound "block.beacon.power_select" with volume 2 to the player
+			add -25 to {mana.%player%}
+			loop all entities in radius 8 blocks of player:
+				if loop-entity isn't a player:
+					apply potion of wither of tier 2 without particles to loop-entity for 8 seconds
+
+#================================ X5-04 ================================#
+
+# When you die, and mana is at 100 or higher, revive the player
+on death of player:
+	if {class.%player%} is equal to 4:
+		if {mana.%player%} is greater than 99:
+			# Sci-fi sound effects.
+			play sound "block.beacon.power_select" with volume 2 to the player
+			add -100 to {mana.%player%}
+			cancel event
+			set player's health to 0.0001
+			set player's hunger to 2
+			apply potion of resistance of tier 20 to player for 12 seconds
+			apply potion of night vision of tier 1 to player for 3 seconds
+			apply potion of blindness of tier 1 to player for 1.5 seconds
+			apply potion of glowing of tier 1 to player for 3 seconds
+			message "&cReviving..."
+			loop 60 times:
+				# Move the player up continuously upwards.
+				set velocity of player to new Vector 0, 0.1, 0
+				play cloud at the player
+				wait a tick
+			loop 3 times:
+				# And slam the player back on to the ground
+				set velocity of player to new Vector 0, -1.65, 0
+				play mobspawner flames at the player
+				wait a tick
+			# Make fake lightning that doesn't do anything.
+			strike fake fake lightning at player
+			play sound "ambient.weather.thunder" with volume 2 to the player
+			apply potion of fire resistance of tier 1 to player for 30 seconds
+			send title "" with subtitle "&cYou have been revived!" to player for 2 seconds with fadein 0.5 second and fade out 0.5 second
+			#create a safe explosion of force 3 at the player
+			loop 160 times:
+				play cloud at the player
+				wait a tick
+
+on right click with sword:
+	if {class.%player%} is equal to 4:
+		player is sneaking
+		if {mana.%player%} is greater than 34:
+			play sound "block.beacon.power_select" with volume 2 to the player
+			add -35 to {mana.%player%}
+			apply potion of resistance of tier 20 to player for 2 seconds
 
 # Reset players mana on respawn.
 on respawn:
