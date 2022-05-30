@@ -11,3 +11,7 @@ Interstellar system for BitzMC, written in Skript.
   - **/resetmana**
     - **Permission:** N/A
     - **Description:** Sets mana to 0.
+
+  - **/isbeacon**
+    - **Permission:** N/A
+    - **Description:** Opens the interstellar beacon.
