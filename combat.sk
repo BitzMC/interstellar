@@ -17,13 +17,6 @@ on join:
 		message "&f[&6Instructor&f]&r&f Other than that, your all caught up! We'll talk again once you are on the planet &6X4-05&f."
 		set {tutorial.%player%} to 1
 
-# Disable portals
-on portal create:
-	cancel event
-
-on player portal:
-	cancel event
-
 function ascendToSpace(p: player):
 	loop 30 times:
 		set velocity of {_p} to new Vector 0, 0.05, 0
@@ -139,7 +132,6 @@ on inventory click:
 				apply potion of resistance of tier 20 to player for 8 seconds
 				teleport player to location at -64, 67, -5 in world "world_nether"
 				message "&fYou have teleported to &6&lX5-07&r&f!"
-				set {mana.%player%} to 0
 				if {planet1dialog.%player%} is not set:
 					wait 5 seconds
 					message "&f[&6Instructor&f]&r&f This planet has a very barren surface, that's why you're underground. Be careful though! Many enemies... and... pigs here do lot's of damage, but they are somewhat lacking in defense."
@@ -166,7 +158,7 @@ on inventory click:
 
 		if index of event-slot is 15:
 			set metadata tag "travel-gui" of player to chest inventory with 3 rows named "&3Travel"
-			set slot 10 of metadata tag "travel-gui" of player to magma block named "&6&lX5-07" with lore "%nl%&fRequires %{maxmana.%player%}% Mana!%nl%&aClick&f to travel."
+			set slot 10 of metadata tag "travel-gui" of player to magma block named "&6&lX5-07" with lore "%nl%&aClick&f to travel."
 			set slot 18 of metadata tag "travel-gui" of player to arrow named "&cBack"
 			open (metadata tag "travel-gui" of player) to player
 
