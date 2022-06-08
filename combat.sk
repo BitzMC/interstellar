@@ -256,37 +256,37 @@ on right click with sword:
 
 # When you die, and mana is at 100 or higher, revive the player
 on death of player:
-	if {class.%player%} is equal to 4:
-		if {mana.%player%} is greater than 99:
+	if {class.%victim%} is equal to 4:
+		if {mana.%victim%} is greater than 99:
 			# Sci-fi sound effects.
-			play sound "block.beacon.power_select" with volume 2 to the player
-			add -100 to {mana.%player%}
+			play sound "block.beacon.power_select" with volume 2 to the victim
+			add -100 to {mana.%victim%}
 			cancel event
-			set player's health to 0.0001
-			set player's hunger to 2
-			apply potion of resistance of tier 20 to player for 12 seconds
-			apply potion of night vision of tier 1 to player for 3 seconds
-			apply potion of blindness of tier 1 to player for 1.5 seconds
-			apply potion of glowing of tier 1 to player for 3 seconds
-			message "&cReviving..."
+			set victim's health to 0.0001
+			set victim's hunger to 2
+			apply potion of resistance of tier 20 to victim for 12 seconds
+			apply potion of night vision of tier 1 to victim for 3 seconds
+			apply potion of blindness of tier 1 to victim for 1.5 seconds
+			apply potion of glowing of tier 1 to victim for 3 seconds
+			message "&cReviving..." to victim
 			loop 60 times:
-				# Move the player up continuously upwards.
-				set velocity of player to new Vector 0, 0.1, 0
-				play cloud at the player
+				# Move the victim up continuously upwards.
+				set velocity of victim to new Vector 0, 0.1, 0
+				play cloud at the victim
 				wait a tick
 			loop 3 times:
-				# And slam the player back on to the ground
-				set velocity of player to new Vector 0, -1.65, 0
-				play mobspawner flames at the player
+				# And slam the victim back on to the ground
+				set velocity of victim to new Vector 0, -1.65, 0
+				play mobspawner flames at the victim
 				wait a tick
 			# Make fake lightning that doesn't do anything.
-			strike fake fake lightning at player
-			play sound "ambient.weather.thunder" with volume 2 to the player
-			apply potion of fire resistance of tier 1 to player for 30 seconds
-			send title "" with subtitle "&cYou have been revived!" to player for 2 seconds with fadein 0.5 second and fade out 0.5 second
-			#create a safe explosion of force 3 at the player
+			strike fake fake lightning at victim
+			play sound "ambient.weather.thunder" with volume 2 to the victim
+			apply potion of fire resistance of tier 1 to victim for 30 seconds
+			send title "" with subtitle "&cYou have been revived!" to victim for 2 seconds with fadein 0.5 second and fade out 0.5 second
+			#create a safe explosion of force 3 at the victim
 			loop 160 times:
-				play cloud at the player
+				play cloud at the victim
 				wait a tick
 
 on right click with sword:
