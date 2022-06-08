@@ -17,6 +17,13 @@ on join:
 		message "&f[&6Instructor&f]&r&f Other than that, your all caught up! We'll talk again once you are on the planet &6X4-05&f."
 		set {tutorial.%player%} to 1
 
+on player portal:
+    if {mana.%player%} is greater than 24:
+        add -25 to {mana.%player%}
+    else:
+        message "&cYou must have %{maxmana.%player%} - {mana.%player%}% more mana to use this."
+        cancel event
+
 function ascendToSpace(p: player):
 	loop 30 times:
 		set velocity of {_p} to new Vector 0, 0.05, 0
@@ -125,7 +132,8 @@ on inventory click:
 		cancel event
 		# Check which slot is being clicked.
 		if index of event-slot is 10:
-			if {mana.%player%} is equal to {maxmana.%player%}:
+			if {mana.%player%} is greater than 24:
+				add -25 to {mana.%player%}
 				close player's inventory
 				ascendToSpace(player)
 				wait 9.5 seconds
@@ -140,7 +148,7 @@ on inventory click:
 					set {planet1dialog.%player%} to 1
 
 			else:
-				message "&cYou must have %{maxmana.%player%} - {mana.%player%}% more mana to use this."
+				message "&cYou must have %25 - {mana.%player%}% more mana to use this."
 				close player's inventory
 		else if index of event-slot is 18:
 			make player execute command "/isbeacon"
