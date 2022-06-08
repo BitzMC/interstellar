@@ -176,7 +176,7 @@ every 1 second:
 				apply potion of strength of tier 1 without particles to loop-player for 30 seconds
 		if {class.%loop-player%} is equal to 4:
 			if loop-player doesn't have potion regeneration:
-				apply potion of regeneration of tier 2 without particles to loop-player for 30 seconds
+				apply potion of regeneration of tier 1 without particles to loop-player for 30 seconds
 
 #================================ X5-07 ================================#
 
