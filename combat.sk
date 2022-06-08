@@ -49,7 +49,6 @@ every 50 ticks:
 	loop all players:
 		if {mana.%loop-player%} is greater than {maxmana.%loop-player%} - 1:
 			set {mana.%loop-player%} to {maxmana.%loop-player%}
-			stop
 		else:
 			add 1 to {mana.%loop-player%}
 
